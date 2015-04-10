@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -81,7 +82,22 @@ namespace NanoByte.NetInvoker
                 return;
             }
 
-            Process.Start(fileName, arguments);
+            try
+            {
+                Process.Start(fileName, arguments);
+            }
+                #region Error handling
+            catch (IOException ex)
+            {
+                context.Respond(HttpStatusCode.InternalServerError, ex.Message);
+                return;
+            }
+            catch (Win32Exception ex)
+            {
+                context.Respond(HttpStatusCode.InternalServerError, ex.Message);
+                return;
+            }
+            #endregion
             context.Respond(HttpStatusCode.NoContent);
         }
 
