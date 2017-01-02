@@ -16,7 +16,7 @@ Password: netinvoker
 
 You may need to execute the following commands once as Administrator before using NetInvoker:
 ```
-netsh http add urlacl http://*:8888/ user=.\Users
+netsh http add urlacl http://+:8888/ user=%COMPUTERNAME%\%USERNAME%
 netsh advfirewall firewall add rule name="NetInvoker" protocol=TCP dir=in localport=8888 action=allow
 ```
 
